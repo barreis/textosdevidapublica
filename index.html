@@ -3,220 +3,209 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arquivo 30 — Laboratório de Linguagem</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#171426">
+<title>Arquivo 30 — Operação Podcast</title>
 <style>
-:root{
-  --bg:#10111b;--panel:#1b1d2c;--panel2:#24273a;
-  --text:#f5f4ff;--muted:#b7b8cf;--accent:#bd8cff;
-  --cyan:#72e4df;--gold:#ffd479;--red:#ff7888;
-  --line:#383b53;--green:#91e7b0;
-}
+:root{--bg:#100f19;--panel:#1c1a2b;--panel2:#28243b;--line:#403956;--text:#f8f5ff;--muted:#c1bbd5;--purple:#c69aff;--cyan:#78e7df;--gold:#ffda88;--red:#ff8498;--green:#8ce6b1}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
-font-family:Inter,system-ui,-apple-system,sans-serif;line-height:1.6}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,Arial,sans-serif;line-height:1.6}
 button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-button:focus-visible,input:focus-visible,textarea:focus-visible,
-select:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
-header{padding:22px 5%;border-bottom:1px solid var(--line);
-background:#151624;position:sticky;top:0;z-index:5}
-.header-row{display:flex;justify-content:space-between;align-items:center;gap:16px}
-.brand{font-size:.85rem;letter-spacing:2px;color:var(--cyan);font-weight:800}
-.timer{font-weight:800;color:var(--gold);font-variant-numeric:tabular-nums}
-main{max-width:980px;margin:auto;padding:28px 18px 60px}
-h1{font-size:clamp(2rem,6vw,3.6rem);line-height:1.08;margin:12px 0}
-h2{line-height:1.2}
-p{color:var(--muted)}
-.eyebrow{color:var(--cyan);font-size:.78rem;letter-spacing:2px;font-weight:800}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;
-padding:clamp(18px,4vw,32px);margin:18px 0}
-.hero{background:linear-gradient(135deg,#24203b,#192b3c);border-color:#454366}
-.tag{display:inline-block;padding:5px 10px;border:1px solid var(--line);
-border-radius:999px;color:var(--cyan);font-size:.8rem;margin:3px}
-button.primary{background:var(--accent);color:#171020;border:0;
-border-radius:12px;padding:13px 20px;font-weight:850}
-button.secondary{background:var(--panel2);color:var(--text);
-border:1px solid var(--line);border-radius:10px;padding:10px 14px}
-button:disabled{opacity:.4;cursor:not-allowed}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-.progress-track{height:8px;background:#303248;border-radius:99px;overflow:hidden;margin:12px 0}
-.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--cyan));transition:width .3s}
-.meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
-color:var(--muted);font-size:.88rem}
-.option{display:flex;align-items:flex-start;gap:12px;padding:14px;
-margin:10px 0;border:1px solid var(--line);border-radius:12px;
-background:#202235;cursor:pointer}
-.option:hover{border-color:var(--accent)}
-.option input{margin-top:6px;accent-color:var(--accent)}
-textarea,input[type=text],select{width:100%;padding:12px;background:#121421;
-color:var(--text);border:1px solid var(--line);border-radius:10px}
-textarea{resize:vertical;min-height:90px}
-label.field{display:block;margin:15px 0 6px;font-weight:700}
-.feedback{padding:14px;border-radius:12px;margin-top:16px}
-.good{background:#183728;border:1px solid #3b8259;color:#b9ffd0}
+button{cursor:pointer;transition:.2s}
+button:hover:not(:disabled){filter:brightness(1.1)}
+button:disabled{opacity:.5;cursor:not-allowed}
+header{position:sticky;top:0;z-index:10;background:#171426ee;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.header-inner{max-width:1050px;margin:auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-size:.78rem;letter-spacing:2px;font-weight:900;color:var(--cyan)}
+.header-sub{font-size:.75rem;color:var(--muted)}
+.timer{font-size:1.5rem;font-weight:950;color:var(--gold);font-variant-numeric:tabular-nums}
+.timer.danger{color:var(--red)}
+main{max-width:1050px;margin:auto;padding:20px 15px 50px}
+h1{font-size:clamp(2.2rem,7vw,4.2rem);line-height:1.1;letter-spacing:-1px;margin:14px 0}
+h2{font-size:clamp(1.35rem,4vw,2rem);line-height:1.2}
+h3{line-height:1.3}
+p{margin:10px 0}
+.muted,.small{color:var(--muted)}
+.small{font-size:.85rem}
+.eyebrow{font-size:.75rem;letter-spacing:2px;font-weight:900;color:var(--cyan)}
+.panel{padding:clamp(16px,4vw,28px);margin:16px 0;background:var(--panel);border:1px solid var(--line);border-radius:18px}
+.hero{background:radial-gradient(ellipse at top right,#45315d,transparent 55%),linear-gradient(130deg,#242039,#172b36)}
+.tag{display:inline-block;padding:4px 10px;border-radius:30px;border:1px solid #67527f;margin:4px;font-size:.8rem}
+.rule-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.rule{background:#171625;border:1px solid var(--line);padding:13px;border-radius:12px}
+.rule strong{color:var(--cyan)}
+.primary,.secondary{padding:11px 15px;border-radius:10px;font-weight:850;border:1px solid transparent}
+.primary{background:var(--purple);color:#1c1028}
+.secondary{background:var(--panel2);color:var(--text);border-color:var(--line)}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:17px}
+.field{display:block;margin:14px 0 6px;font-weight:800}
+input[type=text],textarea,select{width:100%;padding:12px;background:#12111d;color:var(--text);border:1px solid var(--line);border-radius:10px}
+textarea{min-height:90px;resize:vertical}
+select option{background:#1b1929}
+.meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:.87rem}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:16px 0}
+.stat{background:#151421;border:1px solid var(--line);border-radius:11px;padding:10px;text-align:center}
+.stat b{display:block;font-size:1.2rem;color:var(--cyan)}
+.stat span{font-size:.75rem;color:var(--muted)}
+.progress{height:9px;background:#373047;border-radius:30px;overflow:hidden;margin:13px 0 20px}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--cyan));transition:width .3s}
+.challenge-story{padding:15px;background:#171625;border-left:4px solid var(--purple);border-radius:8px;margin:14px 0 20px}
+.option{display:flex;align-items:flex-start;gap:11px;padding:13px;margin:9px 0;background:#222035;border:1px solid var(--line);border-radius:12px;cursor:pointer}
+.option:hover{border-color:var(--purple)}
+.option input{margin-top:6px;accent-color:var(--purple)}
+.feedback{padding:14px;border-radius:12px;margin:14px 0}
+.good{background:#183728;border:1px solid #3b8259;color:#c7ffda}
 .bad{background:#3c202b;border:1px solid #80404e;color:#ffd1d8}
-.order-list{list-style:none;padding:0}
-.order-item{display:flex;align-items:center;gap:10px;padding:12px;
-margin:9px 0;background:#222539;border:1px solid var(--line);border-radius:10px}
-.order-item span{flex:1}
-.order-item button{padding:5px 10px}
-.pair-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:10px;align-items:center}
-.pair-grid>div{padding:10px 0}
-.small{font-size:.88rem;color:var(--muted)}
+.hint{background:#302741;border:1px solid #8064a8;color:#f0e4ff}
+.info{background:#1b3038;border:1px solid #376571;color:#d4faff}
 .hidden{display:none!important}
-.locked{opacity:.55}
-.script-section{padding:16px 0;border-bottom:1px solid var(--line)}
-.script-section:last-child{border-bottom:0}
-footer{text-align:center;padding:24px;color:var(--muted);font-size:.85rem}
-@media(max-width:560px){
- header{padding:14px}
- .header-row{align-items:flex-start}
- .pair-grid{grid-template-columns:1fr}
- .pair-grid>div{padding:4px 0}
-}
+.order-list{list-style:none;padding:0}
+.order-item{display:flex;align-items:center;gap:8px;padding:10px;margin:8px 0;background:#222035;border:1px solid var(--line);border-radius:10px}
+.piece{flex:1}
+.order-item button{padding:5px 10px}
+.pair-grid{display:grid;grid-template-columns:minmax(100px,1fr) minmax(0,1.7fr);gap:12px;align-items:center}
+.pair-term{font-weight:850}
+.script-section{padding:12px 0 22px;border-bottom:1px solid var(--line)}
+.script-section:last-child{border:0}
+.checklist .option{align-items:center}
+.checklist input{accent-color:var(--purple)}
+.badge{display:inline-block;color:#21172d;background:var(--cyan);padding:4px 9px;border-radius:20px;font-weight:900;font-size:.75rem}
+footer{text-align:center;color:var(--muted);padding:22px;font-size:.83rem}
+@media(max-width:600px){.rule-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.pair-grid{grid-template-columns:1fr;gap:3px}}
 @media print{
- body{background:white;color:black}
- header,.no-print,.hero{display:none!important}
- .panel{background:white;color:black;border:1px solid #ccc;break-inside:avoid}
- p,.small,.meta{color:#333}
- textarea,input,select{background:white;color:black;border:1px solid #aaa}
+ body{background:white;color:#111}
+ header,footer,.no-print,#intro,#game{display:none!important}
+ main{padding:0}
+ .panel{background:white;color:#111;border:1px solid #aaa;break-inside:avoid}
+ p,.muted,.small{color:#333}
+ input,textarea,select{background:white;color:#111;border:1px solid #aaa}
+ .script-section{break-inside:avoid}
 }
 </style>
 </head>
 <body>
 <header>
- <div class="header-row">
-  <div>
-   <div class="brand">LABORATÓRIO DE LINGUAGEM</div>
-   <div class="small">ARQUIVO 30 · OPERAÇÃO PODCAST</div>
-  </div>
-  <div class="timer" id="timer">90:00</div>
+ <div class="header-inner">
+  <div><div class="brand">LABORATÓRIO DE LINGUAGEM</div><div class="header-sub">ARQUIVO 30 · OPERAÇÃO PODCAST</div></div>
+  <div style="text-align:right"><div id="timer" class="timer">45:00</div><div class="header-sub">TEMPO DA MISSÃO</div></div>
  </div>
 </header>
 
 <main>
 <section id="intro" class="panel hero">
- <div class="eyebrow">MISSÃO DE LÍNGUA PORTUGUESA</div>
+ <div class="eyebrow">MISSÃO ESPECIAL DE LÍNGUA PORTUGUESA</div>
  <h1>Arquivo 30:<br>Vozes, Medos e Verdades</h1>
- <p>Uma mensagem foi encontrada nos arquivos da cidade. Ela reúne relatos assustadores, documentos públicos e fragmentos de um podcast que nunca chegou ao ar. Para descobrir o que aconteceu, sua equipe precisará interpretar, investigar, argumentar e reconstruir as informações.</p>
+ <p>Um arquivo misterioso reúne documentos da vida pública, relatos de horror, mensagens contraditórias e fragmentos de um podcast que nunca foi ao ar. Uma informação foi retirada de contexto, uma história está incompleta e uma denúncia precisa ser investigada.</p>
+ <p>A equipe deverá interpretar textos, reconhecer gêneros, avaliar evidências, resolver enigmas e organizar pistas. Ao final, transformará as descobertas em um roteiro de podcast autoral.</p>
  <div>
-  <span class="tag">30 desafios</span>
-  <span class="tag">Interpretação textual</span>
-  <span class="tag">Enigmas</span>
-  <span class="tag">Quebra-cabeças</span>
-  <span class="tag">Podcast final</span>
+  <span class="tag">30 desafios</span><span class="tag">Múltipla escolha</span><span class="tag">Enigmas</span><span class="tag">Ordenação</span><span class="tag">Associação</span><span class="tag">Podcast</span>
  </div>
- <h3>Mensagem da professora</h3>
- <p>“Uma boa comunicação não é apenas falar: é compreender, questionar, organizar ideias e escolher as palavras certas para transformar a realidade. Investiguem cada pista, escutem uns aos outros e façam a voz de vocês valer a pena.”</p>
- <p><strong>Professora Bárbara — Língua Portuguesa</strong></p>
- <div class="panel" style="background:#171929">
-  <strong>Como jogar</strong>
+ <h2>Mensagem da professora</h2>
+ <p>“Uma boa comunicação não é apenas falar. É compreender, investigar, questionar, organizar ideias e escolher as palavras certas para transformar a realidade. Trabalhem em equipe, desconfiem das respostas fáceis e façam a voz de vocês valer a pena.”</p>
+ <strong>Professora Bárbara — Língua Portuguesa</strong>
+ <div class="panel">
+  <h2>Regras da missão</h2>
+  <div class="rule-grid">
+   <div class="rule"><strong>45 minutos</strong><br><span class="small">Tempo para resolver os desafios.</span></div>
+   <div class="rule"><strong>+10 pontos</strong><br><span class="small">Por desafio correto.</span></div>
+   <div class="rule"><strong>−2 pontos</strong><br><span class="small">Por dica aceita.</span></div>
+   <div class="rule"><strong>Mínimo zero</strong><br><span class="small">A pontuação nunca fica negativa.</span></div>
+  </div>
   <ul>
-   <li>Trabalhem em equipe e discutam antes de responder.</li>
-   <li>São 30 desafios: múltipla escolha, enigmas, ordenação e associação de conceitos.</li>
-   <li>As respostas corretas liberam o próximo desafio. Leiam os textos com atenção.</li>
-   <li>O cronômetro é de 90 minutos. Ao terminar os desafios, montem o roteiro do podcast.</li>
-   <li>O roteiro pode ser salvo em arquivo de texto ou impresso em PDF pelo navegador.</li>
+   <li>Respostas erradas são registradas, mas não retiram pontos.</li>
+   <li>Após errar, vocês poderão tentar novamente ou pedir uma dica.</li>
+   <li>Cada desafio permite uma dica, com desconto de 2 pontos.</li>
+   <li>É necessário acertar para concluir cada desafio.</li>
+   <li>Depois dos desafios, a equipe deverá montar o roteiro do podcast.</li>
+   <li>O roteiro pode ser salvo no navegador, baixado em TXT ou impresso em PDF.</li>
   </ul>
-  <p class="small">O tempo é um elemento de organização da atividade. Se acabar, vocês poderão concluir a missão e preparar o roteiro.</p>
+  <p class="small">O progresso fica salvo neste navegador e dispositivo. Baixem uma cópia ao terminar.</p>
  </div>
- <label class="field" for="team">Nome da equipe</label>
- <input id="team" type="text" maxlength="80" placeholder="Ex.: Os Arquivistas">
- <label class="field" for="members">Integrantes</label>
- <input id="members" type="text" maxlength="250" placeholder="Nome dos participantes">
- <div class="actions"><button class="primary" onclick="startGame()">INICIAR INVESTIGAÇÃO →</button></div>
+ <label class="field" for="team">Nome da equipe</label><input id="team" type="text" maxlength="100" placeholder="Ex.: Os Investigadores da Linguagem">
+ <label class="field" for="members">Integrantes</label><textarea id="members" style="min-height:65px" placeholder="Nome de todos os participantes."></textarea>
+ <div class="actions">
+  <button class="primary" onclick="startGame()">INICIAR INVESTIGAÇÃO →</button>
+  <button class="secondary" onclick="clearSaved()">LIMPAR DADOS SALVOS</button>
+ </div>
 </section>
 
 <section id="game" class="hidden">
  <div class="panel">
   <div class="meta"><span id="stageLabel">DESAFIO 1 DE 30</span><span id="scoreLabel">0 pontos</span></div>
-  <div class="progress-track"><div id="progress" class="progress-fill"></div></div>
+  <div class="progress"><div id="progress" class="progress-fill"></div></div>
+  <div class="stats">
+   <div class="stat"><b id="statCorrect">0</b><span>ACERTOS</span></div>
+   <div class="stat"><b id="statWrong">0</b><span>ERROS</span></div>
+   <div class="stat"><b id="statHints">0</b><span>DICAS</span></div>
+   <div class="stat"><b id="statDone">0/30</b><span>CONCLUÍDOS</span></div>
+  </div>
   <div class="eyebrow" id="category">INVESTIGAÇÃO</div>
   <h2 id="questionTitle"></h2>
-  <div id="story"></div>
+  <div id="story" class="challenge-story"></div>
   <div id="interaction"></div>
   <div id="feedback" aria-live="polite"></div>
-  <div class="actions">
+  <div class="actions no-print">
    <button id="checkBtn" class="primary" onclick="checkAnswer()">VALIDAR RESPOSTA</button>
+   <button id="hintBtn" class="secondary hidden" onclick="requestHint()">💡 PEDIR DICA (−2 PONTOS)</button>
    <button id="nextBtn" class="primary hidden" onclick="nextChallenge()">PRÓXIMO DESAFIO →</button>
   </div>
+  <div class="actions no-print">
+   <button class="secondary" onclick="saveProgress(true)">SALVAR PROGRESSO</button>
+   <button class="secondary" onclick="showInstructions()">VER REGRAS</button>
+  </div>
  </div>
- <div class="meta"><span>Leia antes de responder.</span><span>Uma resposta correta libera a próxima etapa.</span></div>
+ <p class="small">Conversem antes de responder. Justifiquem as escolhas, observem as pistas e revisem as hipóteses.</p>
 </section>
 
 <section id="finish" class="hidden">
  <div class="panel hero">
-  <div class="eyebrow">ACESSO CONCEDIDO</div>
-  <h1>Vocês reconstruíram o arquivo!</h1>
-  <p>Os documentos foram recuperados. Agora, a equipe precisa transformar o que aprendeu em um podcast com começo, desenvolvimento, reflexão crítica e encerramento.</p>
-  <div class="meta"><span id="finalScore"></span><span id="finalTime"></span></div>
+  <div class="eyebrow">ARQUIVO RECONSTRUÍDO</div>
+  <h1>Missão concluída!</h1>
+  <p>Vocês atravessaram os arquivos, analisaram textos, resolveram enigmas e reconstruíram as pistas. Agora, transformem o conhecimento em um podcast autoral.</p>
+  <span class="badge">30 desafios concluídos</span>
+  <h2 id="finalScore">Pontuação final: 0 pontos</h2>
+  <p id="finalStats" class="muted"></p><p id="finalTime" class="muted"></p>
  </div>
 
  <div class="panel">
-  <h2>Etapa final — Montagem do roteiro</h2>
-  <p>Preencham os campos em equipe. O roteiro precisa articular a linguagem dos textos de horror, uma questão da vida pública e o podcast como prática de letramento.</p>
+  <div class="eyebrow">PRODUÇÃO FINAL</div><h2>Monte o roteiro do podcast</h2>
+  <p>O roteiro deve integrar textos da vida pública, recursos de horror e o podcast como prática de letramento. Definam o propósito, o público, as fontes, os argumentos e a conclusão.</p>
 
-  <label class="field" for="podTitle">1. Título do podcast</label>
-  <input id="podTitle" type="text" maxlength="120" placeholder="Um título marcante">
+  <div class="script-section"><h3>Bloco 1 — Identidade do episódio</h3>
+   <label class="field" for="podTitle">1. Título do podcast</label><input id="podTitle" type="text" placeholder="Criem um título original e marcante.">
+   <label class="field" for="podTheme">2. Tema e questão central</label><textarea id="podTheme" placeholder="Qual questão será investigada? Por que merece atenção?"></textarea>
+   <label class="field" for="podAudience">3. Público-alvo</label><input id="podAudience" type="text" placeholder="Para quem será produzido?">
+   <label class="field" for="podObjective">4. Objetivo comunicativo</label><textarea id="podObjective" placeholder="Informar, conscientizar, investigar, debater ou contar uma história?"></textarea>
+   <label class="field" for="podFormat">5. Formato</label><select id="podFormat"><option value="">Selecione...</option><option>Jornalístico e investigativo</option><option>Contação de horror</option><option>Debate</option><option>Entrevista</option><option>Documentário sonoro</option><option>Horror associado à investigação da vida pública</option><option>Notícias fictícias claramente identificadas</option></select>
+  </div>
 
-  <label class="field" for="podTheme">2. Tema e questão central</label>
-  <textarea id="podTheme" placeholder="Qual problema ou mistério será discutido? Por que ele importa para a sociedade?"></textarea>
+  <div class="script-section"><h3>Bloco 2 — Abertura e contexto</h3>
+   <label class="field" for="podHook">6. Gancho inicial</label><textarea id="podHook" placeholder="Uma pergunta inquietante, um som, uma cena ou uma afirmação."></textarea>
+   <label class="field" for="podIntro">7. Apresentação</label><textarea id="podIntro" placeholder="Quem apresenta? Qual é o tema do episódio?"></textarea>
+   <label class="field" for="podContext">8. Contextualização</label><textarea id="podContext" placeholder="Apresentem o contexto necessário."></textarea>
+   <label class="field" for="podPublic">9. Relação com a vida pública</label><textarea id="podPublic" placeholder="Que direito, instituição ou problema coletivo aparece?"></textarea>
+  </div>
 
-  <label class="field" for="podAudience">3. Público-alvo</label>
-  <input id="podAudience" type="text" placeholder="Para quem vocês vão falar?">
+  <div class="script-section"><h3>Bloco 3 — Investigação e argumentação</h3>
+   <label class="field" for="podSources">10. Fontes e evidências</label><textarea id="podSources" placeholder="Fontes, documentos, dados e relatos. Como verificar a confiabilidade?"></textarea>
+   <label class="field" for="podFacts">11. Fatos, opiniões e ficção</label><textarea id="podFacts" placeholder="Como deixar claro o que é fato, opinião, relato ou ficção?"></textarea>
+   <label class="field" for="podArgument">12. Argumentos e contrapontos</label><textarea id="podArgument" placeholder="Registrem pelo menos dois argumentos, suas evidências e outra perspectiva."></textarea>
+   <label class="field" for="podQuestions">13. Perguntas para debate ou entrevista</label><textarea id="podQuestions" placeholder="Criem três perguntas abertas que provoquem reflexão."></textarea>
+  </div>
 
-  <label class="field" for="podFormat">4. Formato do episódio</label>
-  <select id="podFormat">
-   <option value="">Selecione...</option>
-   <option>Jornalístico e investigativo</option>
-   <option>Contação de história de horror</option>
-   <option>Debate com opiniões divergentes</option>
-   <option>Entrevista fictícia ou dramatizada</option>
-   <option>Documentário sonoro</option>
-   <option>Híbrido: horror e investigação pública</option>
-  </select>
+  <div class="script-section"><h3>Bloco 4 — Narrativa e construção sonora</h3>
+   <label class="field" for="podHorror">14. Recursos de horror e suspense</label><textarea id="podHorror" placeholder="Suspense, descrição sensorial, revelação gradual ou estranhamento."></textarea>
+   <label class="field" for="podSound">15. Trilha, efeitos e pausas</label><textarea id="podSound" placeholder="Descrevam sons, pausas, transições e atmosfera. Utilizem áudios próprios ou autorizados."></textarea>
+   <label class="field" for="podTransitions">16. Transições entre blocos</label><textarea id="podTransitions" placeholder="Como conectar as partes sem saltos bruscos?"></textarea>
+   <label class="field" for="podRoles">17. Divisão das funções</label><textarea id="podRoles" placeholder="Apresentador, pesquisador, roteirista, entrevistador, narrador, editor e revisor."></textarea>
+  </div>
 
-  <label class="field" for="podHook">5. Abertura — gancho inicial</label>
-  <textarea id="podHook" placeholder="Comecem com uma pergunta inquietante, uma cena, um som ou uma informação surpreendente."></textarea>
-
-  <label class="field" for="podIntro">6. Apresentação dos participantes e do tema</label>
-  <textarea id="podIntro" placeholder="Quem apresenta? Qual é o assunto? O que o ouvinte vai descobrir?"></textarea>
-
-  <label class="field" for="podContext">7. Contextualização e fontes</label>
-  <textarea id="podContext" placeholder="Apresentem o contexto, os documentos, os dados ou os textos que serão usados. Identifiquem fontes reais quando houver fatos."></textarea>
-
-  <label class="field" for="podHorror">8. Elementos de horror e construção da atmosfera</label>
-  <textarea id="podHorror" placeholder="Como usar suspense, descrição, ritmo, silêncio ou sonoplastia? Se abordarem um problema público, como evitar exageros e desinformação?"></textarea>
-
-  <label class="field" for="podPublic">9. Relação com a vida pública</label>
-  <textarea id="podPublic" placeholder="Qual direito, instituição, responsabilidade coletiva ou problema social aparece? Quem é afetado?"></textarea>
-
-  <label class="field" for="podArgument">10. Argumentos, análise e contrapontos</label>
-  <textarea id="podArgument" placeholder="Registrem pelo menos dois argumentos, evidências que os sustentem e uma perspectiva diferente a considerar."></textarea>
-
-  <label class="field" for="podQuestions">11. Perguntas para debate ou entrevista</label>
-  <textarea id="podQuestions" placeholder="Escrevam três perguntas que provoquem reflexão e não sejam respondidas apenas com sim ou não."></textarea>
-
-  <label class="field" for="podSound">12. Trilha, efeitos e transições</label>
-  <textarea id="podSound" placeholder="Descrevam os sons, as pausas, as transições e a atmosfera. Usem apenas áudios autorizados ou de uso permitido."></textarea>
-
-  <label class="field" for="podRoles">13. Divisão de funções</label>
-  <textarea id="podRoles" placeholder="Apresentador(a), roteirista, pesquisador(a), entrevistador(a), operador(a) de áudio..."></textarea>
-
-  <label class="field" for="podEnding">14. Conclusão e chamada à reflexão</label>
-  <textarea id="podEnding" placeholder="Qual ideia deve ficar na cabeça do ouvinte? Que reflexão ou ação responsável vocês propõem?"></textarea>
-
-  <label class="field" for="podDuration">15. Duração planejada</label>
-  <select id="podDuration">
-   <option value="">Selecione...</option>
-   <option>3 a 5 minutos</option>
-   <option>5 a 8 minutos</option>
-   <option>8 a 10 minutos</option>
-  </select>
-
-  <label class="field" for="podReview">16. Revisão de linguagem e letramento</label>
-  <textarea id="podReview" placeholder="Como vocês vão conferir clareza, coesão, adequação ao público, pronúncia, fontes e respeito às pessoas mencionadas?"></textarea>
+  <div class="script-section"><h3>Bloco 5 — Encerramento e revisão</h3>
+   <label class="field" for="podEnding">18. Conclusão e reflexão</label><textarea id="podEnding" placeholder="Retomem a questão, sintetizem a descoberta e deixem uma reflexão."></textarea>
+   <label class="field" for="podDuration">19. Duração planejada</label><select id="podDuration"><option value="">Selecione...</option><option>3 a 5 minutos</option><option>5 a 8 minutos</option><option>8 a 10 minutos</option></select>
+   <label class="field" for="podReview">20. Revisão de linguagem e letramento</label><textarea id="podReview" placeholder="Como revisar clareza, coesão, adequação ao público, pronúncia e fontes?"></textarea>
+   <label class="field" for="podCredits">21. Créditos e referências</label><textarea id="podCredits" placeholder="Referências, créditos de áudio e agradecimentos."></textarea>
+  </div>
 
   <div class="actions no-print">
    <button class="primary" onclick="saveScript()">SALVAR ROTEIRO</button>
@@ -226,535 +215,248 @@ footer{text-align:center;padding:24px;color:var(--muted);font-size:.85rem}
   <div id="saveMessage" aria-live="polite"></div>
  </div>
 
- <div class="panel">
-  <h2>Checklist antes da gravação</h2>
-  <p>Marquem os itens que a equipe já conferiu.</p>
-  <div id="checklist">
-   <label class="option"><input type="checkbox"> O roteiro tem começo, desenvolvimento e conclusão.</label>
-   <label class="option"><input type="checkbox"> As informações factuais têm fontes identificadas.</label>
-   <label class="option"><input type="checkbox"> A linguagem está adequada ao público-alvo.</label>
-   <label class="option"><input type="checkbox"> Todos os integrantes têm uma função.</label>
-   <label class="option"><input type="checkbox"> Os efeitos sonoros podem ser utilizados legalmente.</label>
-   <label class="option"><input type="checkbox"> O texto foi revisado e ensaiado em voz alta.</label>
-  </div>
-  <p class="small">A gravação será realizada depois da revisão do roteiro com a professora.</p>
+ <div class="panel checklist">
+  <h2>Checklist antes da gravação</h2><p>Marquem os itens depois de conferir o roteiro.</p>
+  <label class="option"><input type="checkbox"> Título e objetivo estão claros.</label>
+  <label class="option"><input type="checkbox"> O roteiro tem abertura, desenvolvimento e conclusão.</label>
+  <label class="option"><input type="checkbox"> As informações factuais têm fontes identificadas.</label>
+  <label class="option"><input type="checkbox"> Fatos, opiniões, relatos e ficção estão diferenciados.</label>
+  <label class="option"><input type="checkbox"> Os argumentos têm justificativas ou evidências.</label>
+  <label class="option"><input type="checkbox"> A linguagem é adequada ao público-alvo.</label>
+  <label class="option"><input type="checkbox"> Todos os integrantes têm função definida.</label>
+  <label class="option"><input type="checkbox"> Os efeitos sonoros podem ser utilizados legalmente.</label>
+  <label class="option"><input type="checkbox"> As falas foram revisadas e ensaiadas.</label>
+  <label class="option"><input type="checkbox"> A conclusão deixa uma reflexão significativa.</label>
+  <div class="actions no-print"><button class="primary" onclick="saveScript()">SALVAR CHECKLIST</button><button class="secondary" onclick="window.print()">IMPRIMIR / SALVAR PDF</button></div>
  </div>
 </section>
 </main>
-
-<footer>Arquivo 30 · Língua Portuguesa · Aprender a ler, interpretar, argumentar e dar voz às ideias.</footer>
+<footer>Arquivo 30 · Língua Portuguesa · Professora Bárbara</footer>
 
 <script>
-const challenges = [
-{
-type:"mc",cat:"LEITURA CRÍTICA",title:"O documento desaparecido",
-story:"ARQUIVO 01 — Um aviso público informa que a biblioteca do bairro ficará fechada por 15 dias. O texto apresenta o motivo, as datas, os serviços alternativos e o contato da administração.",
-q:"Qual característica torna esse texto especialmente útil para a vida pública?",
-opts:["O uso de suspense para prender o leitor.","A presença de informações claras que orientam decisões e ações.","A ausência de destinatário definido.","O uso exclusivo de opiniões pessoais."],a:1,
-exp:"Textos da vida pública orientam os cidadãos, comunicam decisões e facilitam o acesso a informações relevantes."
-},
-{
-type:"mc",cat:"GÊNEROS TEXTUAIS",title:"Quem fala com quem?",
-story:"ARQUIVO 02 — Uma associação de moradores envia um ofício à prefeitura solicitando iluminação em uma praça. O documento explica o problema e apresenta justificativas.",
-q:"Qual é a finalidade predominante desse texto?",
-opts:["Narrar uma aventura sobrenatural.","Entreter com uma história ficcional.","Formalizar uma solicitação e defender uma necessidade coletiva.","Registrar uma conversa privada sem finalidade pública."],a:2,
-exp:"O ofício é utilizado em comunicações formais e pode registrar pedidos, informações e encaminhamentos institucionais."
-},
-{
-type:"mc",cat:"INTERPRETAÇÃO",title:"A pista do destinatário",
-story:"ARQUIVO 03 — Leia: “Prezadas famílias, a reunião sobre a segurança no entorno da escola ocorrerá na quinta-feira, às 19h, no auditório.”",
-q:"Qual informação permite ao leitor organizar sua participação?",
-opts:["A saudação formal, isoladamente.","O tema, a data, o horário e o local informados.","A escolha da palavra “Prezadas”.","A ausência de detalhes sobre o encontro."],a:1,
-exp:"A comunicação pública precisa apresentar os dados práticos necessários para que o destinatário compreenda e aja."
-},
-{
-type:"mc",cat:"HORROR",title:"A casa que respirava",
-story:"ARQUIVO 04 — “Às três da manhã, a parede estalou. O corredor pareceu se alongar. Do outro lado da porta, alguém pronunciou meu nome, embora eu morasse sozinho.”",
-q:"Que recurso constrói o efeito de horror nesse fragmento?",
-opts:["A apresentação de dados estatísticos.","A linguagem objetiva de um relatório.","A descrição de uma rotina sem conflito.","O suspense, o estranhamento e a ruptura do cotidiano."],a:3,
-exp:"O horror frequentemente transforma elementos cotidianos em sinais de ameaça e incerteza."
-},
-{
-type:"mc",cat:"HORROR",title:"A pista sonora",
-story:"ARQUIVO 05 — A equipe quer gravar uma cena em que o ouvinte imagine uma presença invisível atrás do narrador.",
-q:"Qual escolha sonora pode construir suspense sem explicar tudo imediatamente?",
-opts:["Uma pausa, ruídos discretos e uma mudança gradual de intensidade.","Uma música alegre e contínua em volume máximo.","Uma explicação completa antes da cena começar.","A repetição de todas as falas sem nenhuma variação."],a:0,
-exp:"Silêncio, ritmo, intensidade e sons sugestivos podem estimular a imaginação e criar expectativa."
-},
-{
-type:"mc",cat:"VIDA PÚBLICA + HORROR",title:"O medo fora da ficção",
-story:"ARQUIVO 06 — Um podcast aborda o medo que moradores sentem ao atravessar uma rua sem iluminação. A equipe pretende relacionar relatos a pedidos de manutenção e dados públicos.",
-q:"Qual abordagem combina melhor horror, vida pública e responsabilidade comunicativa?",
-opts:["Inventar estatísticas para aumentar o medo.","Identificar pessoas sem consentimento e divulgar seus endereços.","Usar a atmosfera narrativa com relatos autorizados e dados verificáveis, distinguindo fatos de dramatizações.","Apresentar todo boato como prova de crime."],a:2,
-exp:"A linguagem narrativa pode envolver o público, mas informações reais exigem verificação, contexto e cuidado ético."
-},
-{
-type:"mc",cat:"LETRAMENTO",title:"Ler também é agir",
-story:"ARQUIVO 07 — Um estudante lê uma campanha pública, identifica o público-alvo, compara fontes e escreve perguntas para uma entrevista sobre transporte coletivo.",
-q:"Por que essa atividade é um exemplo de letramento?",
-opts:["Porque consiste apenas em pronunciar palavras em voz alta.","Porque envolve usar a leitura e a escrita para compreender e participar de práticas sociais.","Porque elimina a necessidade de interpretar textos.","Porque considera apenas a gramática, sem contexto."],a:1,
-exp:"Letramento envolve participar de práticas sociais que mobilizam leitura, escrita, interpretação e produção de sentidos."
-},
-{
-type:"mc",cat:"PODCAST",title:"O microfone não é neutro",
-story:"ARQUIVO 08 — Duas equipes defendem soluções diferentes para um problema do bairro. Uma delas pretende editar a fala do entrevistado de modo a alterar seu sentido.",
-q:"Qual princípio deve orientar a edição?",
-opts:["Tornar a fala mais polêmica a qualquer custo.","Retirar o contexto para encurtar o episódio.","Escolher apenas trechos que confirmem a opinião da equipe.","Preservar o sentido, contextualizar as falas e não distorcer declarações."],a:3,
-exp:"A edição deve respeitar o sentido das declarações e diferenciar opinião, evidência e interpretação."
-},
-{
-type:"mc",cat:"ARGUMENTAÇÃO",title:"Opinião ou evidência?",
-story:"ARQUIVO 09 — No roteiro, alguém escreve: “A praça é perigosa porque todo mundo sabe disso”.",
-q:"Qual é o principal problema argumentativo dessa frase?",
-opts:["Ela transforma uma impressão genérica em justificativa, sem apresentar evidências verificáveis.","Ela apresenta uma fonte identificável e dados suficientes.","Ela diferencia claramente fato e opinião.","Ela descreve um procedimento de pesquisa."],a:0,
-exp:"Uma afirmação precisa de justificativa consistente. Relatos podem ser relevantes, mas não substituem automaticamente dados e contexto."
-},
-{
-type:"mc",cat:"LINGUAGEM",title:"A voz e o público",
-story:"ARQUIVO 10 — Um podcast para estudantes do Ensino Médio explica como acessar um serviço público.",
-q:"Qual escolha de linguagem tende a ser mais adequada?",
-opts:["Usar termos técnicos sem explicação para parecer especialista.","Falar de modo excessivamente vago e não explicar o serviço.","Utilizar linguagem clara, explicar termos necessários e manter a precisão das informações.","Usar apenas gírias, independentemente do assunto."],a:2,
-exp:"Adequação linguística depende do propósito, do público e da situação comunicativa. Clareza não significa abandonar a precisão."
-},
-{
-type:"mc",cat:"COESÃO",title:"A transição perdida",
-story:"ARQUIVO 11 — O roteiro passa de um relato assustador para a análise de um problema de iluminação pública sem qualquer conexão.",
-q:"Qual recurso pode melhorar a coesão entre as partes?",
-opts:["Eliminar toda a análise pública.","Criar uma transição que explique a relação entre a sensação de medo e as condições concretas do espaço.","Repetir a mesma frase em todos os blocos.","Trocar o assunto sem avisar o ouvinte."],a:1,
-exp:"Transições bem construídas explicitam relações entre ideias e ajudam o ouvinte a acompanhar a progressão temática."
-},
-{
-type:"mc",cat:"ÉTICA",title:"O relato anônimo",
-story:"ARQUIVO 12 — Uma pessoa relata uma experiência assustadora no bairro e pede que sua identidade não seja revelada.",
-q:"O que a equipe deve fazer?",
-opts:["Publicar seu nome para aumentar a credibilidade.","Inventar detalhes para preencher lacunas.","Divulgar dados pessoais em redes sociais.","Respeitar o combinado, avaliar os riscos e verificar o relato sem expor desnecessariamente a pessoa."],a:3,
-exp:"O trabalho com relatos exige consentimento, cuidado com dados pessoais e avaliação responsável dos riscos de exposição."
-},
-{
-type:"mc",cat:"ESTRUTURA",title:"A ordem do episódio",
-story:"ARQUIVO 13 — O grupo já tem abertura, contextualização, desenvolvimento e conclusão.",
-q:"Qual organização tende a favorecer a compreensão do ouvinte?",
-opts:["Apresentar as conclusões antes de revelar o assunto e omitir o contexto.","Alternar falas aleatórias sem conexão.","Apresentar o tema, contextualizar, desenvolver argumentos e concluir retomando a questão central.","Começar com créditos longos e encerrar sem síntese."],a:2,
-exp:"Uma estrutura coerente orienta a escuta e dá progressão às informações e aos argumentos."
-},
-{
-type:"mc",cat:"FONTES",title:"A notícia fantasma",
-story:"ARQUIVO 14 — Uma postagem afirma que a prefeitura cancelou um serviço, mas não informa data, documento ou fonte.",
-q:"Qual é a melhor providência antes de incluir essa informação no podcast?",
-opts:["Verificar canais oficiais e fontes independentes confiáveis, buscando confirmação e contexto.","Repassar a postagem porque muitas pessoas curtiram.","Transformar a alegação em fato confirmado.","Omitir qualquer tentativa de verificação."],a:0,
-exp:"A verificação deve buscar origem, data, evidências e confirmação. Popularidade não é comprovação."
-},
-{
-type:"mc",cat:"MULTIMODALIDADE",title:"Texto que também se escuta",
-story:"ARQUIVO 15 — Um podcast combina fala, música, ruídos, pausas e organização dos turnos de fala.",
-q:"O que essa combinação evidencia?",
-opts:["Que somente a linguagem escrita produz sentidos.","Que os elementos sonoros são sempre decorativos.","Que a compreensão depende apenas da voz do apresentador.","Que diferentes recursos semióticos participam da produção de sentidos."],a:3,
-exp:"O podcast é multimodal: voz, silêncio, sons, ritmo e estrutura podem produzir significados em conjunto."
-},
-{
-type:"riddle",cat:"ENIGMA 1",title:"A mensagem que não acusa",
-story:"Uma equipe recebe um texto que solicita providências, identifica um problema coletivo, apresenta justificativas e pede uma resposta formal. Não é uma denúncia policial nem uma narrativa de ficção.",
-q:"Qual gênero textual é a resposta mais adequada?",
-placeholder:"Digite o gênero textual...",
-answers:["ofício","requerimento","solicitação formal"],
-exp:"Um ofício pode formalizar uma comunicação institucional. O requerimento também pode ser adequado em situações específicas; o importante é reconhecer a finalidade formal do documento."
-},
-{
-type:"riddle",cat:"ENIGMA 2",title:"O monstro sem rosto",
-story:"Sou construído pela expectativa. Posso surgir numa porta entreaberta, num ruído sem origem ou numa informação que falta. Nem sempre preciso aparecer para assustar.",
-q:"Que recurso narrativo sou eu?",
-placeholder:"Digite sua resposta...",
-answers:["suspense","o suspense","construção do suspense"],
-exp:"O suspense administra informações e expectativas, mantendo o público em estado de incerteza."
-},
-{
-type:"riddle",cat:"ENIGMA 3",title:"A ponte invisível",
-story:"Não sou a conclusão nem o argumento. Apareço entre duas ideias e mostro ao ouvinte por que uma leva à outra. Posso ser feita com expressões como “por outro lado” e “diante disso”.",
-q:"Que recurso textual está sendo descrito?",
-placeholder:"Digite sua resposta...",
-answers:["conectivo","conectivos","elemento de coesão","coesão","articulador textual"],
-exp:"Conectivos e outros articuladores ajudam a estabelecer relações de sentido e a construir coesão."
-},
-{
-type:"riddle",cat:"ENIGMA 4",title:"A testemunha invisível",
-story:"Posso sustentar uma afirmação, mas preciso ser identificada e examinada. Posso ser um documento, uma pesquisa ou um dado confiável. Sem mim, uma alegação pode continuar sem comprovação.",
-q:"Que elemento da argumentação está sendo descrito?",
-placeholder:"Digite sua resposta...",
-answers:["evidência","evidência verificável","prova","fonte confiável","evidências"],
-exp:"Evidências e fontes identificáveis dão sustentação às afirmações. Sua qualidade e seu contexto também precisam ser avaliados."
-},
-{
-type:"riddle",cat:"ENIGMA 5",title:"A voz que reúne",
-story:"Não sou apenas um arquivo de áudio. Posso combinar roteiro, oralidade, escuta, pesquisa e edição. Quando produzido com propósito, ajudo pessoas a participar de práticas sociais de linguagem.",
-q:"Qual ferramenta de comunicação está sendo descrita?",
-placeholder:"Digite sua resposta...",
-answers:["podcast","o podcast"],
-exp:"O podcast pode articular leitura, escrita, oralidade, pesquisa, escuta e produção multimodal."
-},
-{
-type:"order",cat:"QUEBRA-CABEÇA 1",title:"Reconstrua o documento",
-story:"As partes de um aviso público foram embaralhadas. Reorganize-as para formar uma comunicação clara.",
-q:"Coloque as partes na ordem mais lógica, do contexto ao encaminhamento.",
-items:[
-"Informar onde obter mais informações ou como agir.",
-"Identificar o assunto e a razão do aviso.",
-"Apresentar os detalhes necessários, como data, local e serviço.",
-"Indicar quem emite o aviso e a quem ele se destina."
-],correct:[3,1,2,0],
-exp:"Identificação e destinatário, assunto, detalhes e encaminhamento formam uma sequência funcional. Em textos reais, a ordem pode variar conforme o gênero."
-},
-{
-type:"order",cat:"QUEBRA-CABEÇA 2",title:"O roteiro assombrado",
-story:"Uma narrativa de horror foi cortada em quatro partes. Reconstrua a progressão dramática.",
-q:"Organize a sequência do início ao desfecho.",
-items:[
-"A personagem descobre que o ruído vinha de um gravador desligado.",
-"Um ruído discreto se repete no corredor vazio.",
-"A personagem entra na casa e percebe que algo está errado.",
-"O som passa a responder às perguntas da personagem."
-],correct:[2,1,3,0],
-exp:"A sequência apresenta situação inicial, indício inquietante, intensificação da ameaça e revelação. Outras estruturas podem funcionar, desde que mantenham progressão narrativa."
-},
-{
-type:"order",cat:"QUEBRA-CABEÇA 3",title:"A investigação responsável",
-story:"O podcast recebeu uma denúncia sobre falta de iluminação numa rua. A equipe precisa investigar antes de publicar.",
-q:"Ordene as etapas do procedimento.",
-items:[
-"Comparar as informações e identificar o que ainda não foi confirmado.",
-"Consultar fontes pertinentes e verificar registros ou dados disponíveis.",
-"Apresentar o resultado com contexto e limites da apuração.",
-"Definir com precisão qual afirmação será investigada."
-],correct:[3,1,0,2],
-exp:"Uma investigação responsável delimita a pergunta, reúne informações, avalia evidências e comunica o que foi ou não confirmado."
-},
-{
-type:"order",cat:"QUEBRA-CABEÇA 4",title:"Da leitura ao microfone",
-story:"A equipe transformará um texto em um episódio de podcast. Reordene as ações de produção.",
-q:"Qual é uma sequência de trabalho coerente?",
-items:[
-"Ensaiar, gravar e avaliar o resultado.",
-"Definir propósito, público e tema.",
-"Revisar o roteiro e verificar as fontes.",
-"Planejar os blocos e escrever o roteiro."
-],correct:[1,3,2,0],
-exp:"Planejamento, escrita, revisão e gravação ajudam a evitar improvisação desorganizada e erros de informação."
-},
-{
-type:"order",cat:"QUEBRA-CABEÇA 5",title:"O final que faz pensar",
-story:"O episódio já apresentou um problema público e discutiu diferentes argumentos. Falta concluir sem reduzir uma questão complexa a uma resposta simplista.",
-q:"Organize os movimentos da conclusão.",
-items:[
-"Apontar uma pergunta, reflexão ou ação possível para o público.",
-"Retomar a questão central do episódio.",
-"Resumir o que as evidências e os argumentos permitem concluir.",
-"Agradecer a escuta e encerrar o episódio."
-],correct:[1,2,0,3],
-exp:"A conclusão retoma o foco, sintetiza a análise, convida à reflexão e encerra a comunicação."
-},
-{
-type:"pairs",cat:"ASSOCIAÇÃO 1",title:"O arquivo dos gêneros",
-story:"Os nomes dos gêneros foram separados de suas funções. Faça cada associação.",
-q:"Associe cada gênero à descrição que melhor o representa.",
-pairs:[
-["Notícia","Relata acontecimentos de interesse público com apuração."],
-["Conto de horror","Constrói uma narrativa ficcional com efeitos de medo ou inquietação."],
-["Ofício","Formaliza uma comunicação institucional."],
-["Podcast","Publicação de episódios em áudio, com possibilidade de combinar diferentes recursos."]
-],
-exp:"Os gêneros têm propósitos, estruturas e convenções que variam de acordo com a situação comunicativa."
-},
-{
-type:"pairs",cat:"ASSOCIAÇÃO 2",title:"Ferramentas da linguagem",
-story:"Quatro conceitos aparecem nos arquivos, mas suas definições foram apagadas.",
-q:"Relacione cada conceito à sua definição.",
-pairs:[
-["Coesão","Relações linguísticas que conectam partes do texto."],
-["Argumento","Razão apresentada para sustentar uma tese ou posição."],
-["Público-alvo","Grupo a quem a comunicação se dirige prioritariamente."],
-["Sonoplastia","Uso planejado de sons para compor a experiência auditiva."]
-],
-exp:"Reconhecer esses conceitos ajuda a planejar textos e episódios com maior clareza."
-},
-{
-type:"pairs",cat:"ASSOCIAÇÃO 3",title:"Fato, opinião e ficção",
-story:"Um fragmento pode conter informações de naturezas diferentes. Não confunda os efeitos narrativos com comprovação.",
-q:"Associe cada conceito à descrição correta.",
-pairs:[
-["Fato verificável","Afirmação que pode ser confrontada com evidências."],
-["Opinião","Avaliação ou posição de uma pessoa."],
-["Ficção","Construção narrativa imaginada, ainda que inspirada na realidade."],
-["Boato","Informação circulante sem confirmação suficiente."]
-],
-exp:"Separar fato, opinião, ficção e boato evita confusão e fortalece a leitura crítica."
-},
-{
-type:"pairs",cat:"ASSOCIAÇÃO 4",title:"Os elementos do horror",
-story:"A atmosfera de horror pode ser construída por diferentes estratégias narrativas e sonoras.",
-q:"Associe cada recurso ao seu efeito mais provável.",
-pairs:[
-["Pausa estratégica","Cria expectativa e destaca um momento."],
-["Revelação gradual","Libera informações aos poucos."],
-["Contraste sonoro","Pode intensificar a sensação de estranhamento."],
-["Descrição sensorial","Ajuda o público a imaginar ambientes e sensações."]
-],
-exp:"A escolha dos recursos deve atender à intenção narrativa e ao efeito pretendido."
-},
-{
-type:"pairs",cat:"ASSOCIAÇÃO 5",title:"O podcast como prática social",
-story:"O último arquivo descreve tarefas necessárias para transformar pesquisa em comunicação pública.",
-q:"Associe cada etapa ao seu objetivo.",
-pairs:[
-["Pesquisa","Reunir e avaliar informações pertinentes."],
-["Roteiro","Organizar conteúdo, falas e progressão."],
-["Edição","Montar o áudio sem distorcer o sentido das falas."],
-["Revisão","Verificar clareza, linguagem, fontes e coerência."]
-],
-exp:"O podcast resulta de decisões de pesquisa, escrita, oralidade, edição e revisão."
-}
+"use strict";
+const TOTAL_SECONDS=45*60;
+const STORAGE_KEY="arquivo30_podcast_portugues_v4";
+
+const challenges=[
+{type:"mc",cat:"01 · LEITURA CRÍTICA",title:"O documento desaparecido",story:"A equipe encontra um aviso: “A biblioteca comunitária permanecerá fechada entre os dias 12 e 16 para manutenção elétrica. Durante esse período, a devolução de livros poderá ser feita na recepção do centro cultural. Informações: setor administrativo.”",q:"Qual característica torna esse aviso adequado à vida pública?",opts:["A presença de um mistério sem resolução.","A clareza das informações que orientam decisões e ações dos leitores.","O uso de linguagem figurada como objetivo principal.","A ausência de destinatário e finalidade."],a:1,hint:"Perguntem o que o leitor consegue descobrir e fazer depois de ler o aviso.",exp:"O aviso informa uma mudança, delimita datas e apresenta uma alternativa prática."},
+{type:"mc",cat:"02 · GÊNEROS TEXTUAIS",title:"Quem fala com quem?",story:"Uma associação de moradores encaminha à prefeitura um documento relatando a falta de iluminação de uma praça. O texto descreve o problema e solicita providências.",q:"Qual finalidade predomina?",opts:["Narrar uma aventura sobrenatural.","Criar uma personagem fictícia.","Formalizar uma solicitação sobre uma necessidade coletiva.","Registrar conversa particular sem encaminhamento."],a:2,hint:"O documento é dirigido a uma instituição e pede uma providência.",exp:"A comunicação formal pode registrar demandas coletivas com justificativas e encaminhamentos."},
+{type:"mc",cat:"03 · DESTINATÁRIO",title:"A reunião misteriosa",story:"Uma mensagem escolar informa: “Prezadas famílias, a reunião sobre segurança no entorno da escola ocorrerá na quinta-feira, às 19h, no auditório. Dúvidas podem ser encaminhadas à secretaria.”",q:"Como o texto facilita a participação?",opts:["Usa apenas uma saudação formal.","Apresenta tema, data, horário, local e contato.","Esconde o assunto para despertar curiosidade.","Depende de informações que só o emissor conhece."],a:1,hint:"Identifiquem os dados que permitem planejar a presença.",exp:"Informações objetivas e canais de contato ajudam o destinatário a compreender e agir."},
+{type:"mc",cat:"04 · HORROR",title:"A casa que respirava",story:"“Às três da manhã, a parede estalou. O corredor pareceu se alongar. Do outro lado da porta, alguém pronunciou meu nome, embora eu morasse sozinho.”",q:"Qual combinação constrói o horror?",opts:["Vocabulário técnico e ausência de conflito.","Dados estatísticos e linguagem administrativa.","Explicações completas antes do acontecimento.","Estranhamento, incerteza e ruptura do cotidiano."],a:3,hint:"A ameaça não aparece claramente. Pense na incerteza e na imaginação do leitor.",exp:"O horror explora o desconhecido, o estranhamento e a transformação do familiar em ameaça."},
+{type:"mc",cat:"05 · HORROR SONORO",title:"A pista que não aparece",story:"A equipe precisa gravar uma cena em que o ouvinte imagine uma presença atrás do narrador, sem vê-la nem receber uma explicação imediata.",q:"Qual plano sonoro tende a produzir suspense?",opts:["Usar pausas, ruídos discretos e mudanças graduais de intensidade.","Manter música alegre e alta durante toda a cena.","Explicar cada ruído antes da cena.","Eliminar variações de ritmo e volume."],a:0,hint:"Um som incompleto ou uma pausa pode fazer o ouvinte esperar por algo.",exp:"Silêncio, ritmo, contraste e sons sugestivos ajudam a criar expectativa."},
+{type:"mc",cat:"06 · VIDA PÚBLICA E HORROR",title:"O medo fora da ficção",story:"Um grupo produzirá um podcast sobre o medo que moradores sentem ao atravessar uma rua sem iluminação. A proposta inclui relatos, documentos públicos e uma dramatização ficcional.",q:"Qual estratégia combina criatividade e responsabilidade?",opts:["Inventar dados para assustar.","Apresentar boatos como fatos.","Usar relatos autorizados, verificar dados e identificar a dramatização.","Publicar nomes e endereços de entrevistados."],a:2,hint:"O público precisa distinguir o que foi apurado do que foi inventado.",exp:"A produção responsável diferencia ficção e fatos, verifica informações e respeita a privacidade."},
+{type:"mc",cat:"07 · LETRAMENTO",title:"Ler também é agir",story:"Uma estudante lê uma campanha pública, identifica o público-alvo, compara a mensagem com outras fontes e produz uma resposta para a comunidade escolar.",q:"Por que essas ações se relacionam ao letramento?",opts:["Porque consistem apenas em pronunciar palavras.","Porque usam leitura, escrita e interpretação em práticas sociais concretas.","Porque eliminam a interpretação de contextos.","Porque consideram somente regras gramaticais isoladas."],a:1,hint:"Letramento não é apenas decodificar palavras; é usar a linguagem em contextos sociais.",exp:"Letramento envolve práticas sociais de leitura, escrita, interpretação e produção de sentidos."},
+{type:"mc",cat:"08 · ÉTICA E EDIÇÃO",title:"O microfone não é neutro",story:"Uma entrevistada afirma: “A reforma melhorou a iluminação, mas ainda existem pontos escuros.” Um integrante sugere cortar a segunda parte para que pareça aprovação total.",q:"Qual decisão editorial é mais responsável?",opts:["Editar a fala para criar polêmica.","Publicar somente a parte favorável.","Retirar o contexto sem consultar a entrevistada.","Preservar o sentido e evitar cortes que distorçam a posição."],a:3,hint:"Diferenciem resumir uma fala de alterar o significado.",exp:"A edição pode organizar o conteúdo, mas não deve deturpar declarações."},
+{type:"mc",cat:"09 · ARGUMENTAÇÃO",title:"Opinião ou evidência?",story:"No roteiro aparece: “A praça é perigosa porque todo mundo sabe disso”. Nenhum dado ou relato contextualizado acompanha a frase.",q:"Qual é o principal problema argumentativo?",opts:["A afirmação não apresenta evidências suficientes.","Há fontes demais identificadas.","O texto distingue claramente opinião e fato.","A conclusão é sustentada por dados verificáveis."],a:0,hint:"Além de repetir que todos sabem, que informação comprova a afirmação?",exp:"Uma afirmação precisa de justificativas e evidências adequadas."},
+{type:"mc",cat:"10 · ADEQUAÇÃO LINGUÍSTICA",title:"A voz e o público",story:"Um podcast destinado a estudantes do Ensino Médio explica como acessar um serviço público. A versão inicial contém siglas sem explicação e períodos muito longos.",q:"Qual revisão melhora a comunicação?",opts:["Acrescentar mais siglas.","Substituir tudo por gírias.","Usar linguagem clara, explicar termos e manter precisão.","Eliminar detalhes necessários."],a:2,hint:"A linguagem deve ser compreensível sem perder precisão.",exp:"A adequação considera público, propósito, contexto e clareza."},
+{type:"mc",cat:"11 · COESÃO",title:"A transição perdida",story:"O podcast termina um relato de horror sobre uma rua escura e começa, sem transição, a apresentar dados sobre iluminação pública.",q:"Qual intervenção melhora a organização?",opts:["Excluir a análise.","Criar uma transição que explique a relação entre relato e problema público.","Repetir a abertura sem motivo.","Mudar de tema a cada informação nova."],a:1,hint:"Respondam por que o ouvinte passa do relato para os dados.",exp:"Transições estabelecem relações entre partes do discurso e favorecem a progressão temática."},
+{type:"mc",cat:"12 · PRIVACIDADE",title:"A testemunha invisível",story:"Uma pessoa envia um relato sobre uma situação ameaçadora e pede anonimato. O áudio original revela sua voz e seu endereço.",q:"Qual decisão demonstra responsabilidade?",opts:["Publicar o áudio integral.","Divulgar o endereço.","Inventar um nome e manter os demais dados.","Avaliar riscos, respeitar o consentimento e retirar identificadores."],a:3,hint:"Uma voz ou um endereço podem revelar a identidade mesmo sem dizer o nome.",exp:"É necessário proteger dados pessoais e avaliar riscos de identificação."},
+{type:"mc",cat:"13 · ESTRUTURA DO PODCAST",title:"A ordem do episódio",story:"A equipe tem quatro blocos: abertura, contextualização, desenvolvimento dos argumentos e conclusão.",q:"Qual sequência é mais funcional?",opts:["Conclusão, créditos, tema e argumentos sem contexto.","Falas aleatórias.","Apresentar o tema, contextualizar, desenvolver argumentos e concluir.","Créditos extensos e encerramento sem síntese."],a:2,hint:"O ouvinte precisa conhecer o tema antes de avaliar as evidências.",exp:"Uma estrutura coerente organiza a informação em etapas."},
+{type:"mc",cat:"14 · VERIFICAÇÃO",title:"A notícia fantasma",story:"Uma postagem afirma que um serviço público será encerrado na próxima semana. Não apresenta data, documento ou fonte identificável.",q:"O que deve anteceder a divulgação?",opts:["Verificar a origem e procurar fontes confiáveis que confirmem a informação.","Repassar porque tem muitos comentários.","Apresentar como fato confirmado.","Ignorar a data e a autoria."],a:0,hint:"Curtidas não comprovam afirmações. Procurem a origem e a confirmação.",exp:"A verificação considera autoria, data, origem, evidências e contexto."},
+{type:"mc",cat:"15 · MULTIMODALIDADE",title:"O texto que também se escuta",story:"Um episódio combina narração, música, ruídos, pausas, depoimentos e uma sequência planejada de blocos.",q:"O que essa combinação evidencia?",opts:["Somente a escrita produz sentidos.","A compreensão depende exclusivamente do volume.","Os sons são sempre decorativos.","Diferentes recursos semióticos participam da produção de sentidos."],a:3,hint:"Considere como voz, silêncio, ritmo e música mudam a interpretação.",exp:"O podcast combina recursos verbais, sonoros e organizacionais."},
+{type:"riddle",cat:"16 · ENIGMA 1",title:"A mensagem que não acusa",story:"Sou usado em contextos formais para comunicar uma demanda a uma instituição. Posso identificar um problema, apresentar justificativas e pedir providências.",q:"Citem um gênero de comunicação formal que pode cumprir essa função.",answers:["ofício","requerimento","solicitação formal","documento formal"],hint:"Pense em um documento usado em comunicações institucionais ou pedidos formais.",exp:"Ofícios, requerimentos e solicitações formais podem cumprir essa função."},
+{type:"riddle",cat:"17 · ENIGMA 2",title:"O monstro sem rosto",story:"Não sou o monstro, nem a porta, nem o ruído. Sou o efeito criado quando a narrativa administra informações e faz o público esperar.",q:"Qual recurso narrativo está sendo descrito?",answers:["suspense","o suspense","construção do suspense"],hint:"É o recurso que mantém o público na expectativa.",exp:"O suspense é construído pelo controle das informações, da expectativa e do ritmo."},
+{type:"riddle",cat:"18 · ENIGMA 3",title:"A ponte invisível",story:"Apareço entre palavras, orações e partes do texto para estabelecer relações de oposição, causa, consequência, adição ou conclusão. “Entretanto” e “portanto” são exemplos.",q:"Que elementos estão sendo descritos?",answers:["conectivos","conectivo","articuladores textuais","elementos de coesão","coesão"],hint:"São palavras que conectam ideias e expressam relações de sentido.",exp:"Conectivos e articuladores ajudam a organizar as relações de sentido."},
+{type:"riddle",cat:"19 · ENIGMA 4",title:"A testemunha das afirmações",story:"Posso ser um dado, documento, registro ou resultado de pesquisa. Quando sou pertinente e confiável, ajudo a sustentar uma afirmação.",q:"Qual elemento da argumentação está sendo descrito?",answers:["evidência","evidências","prova","evidência verificável"],hint:"Pense no que pode ser examinado para apoiar uma afirmação.",exp:"Evidências relevantes ajudam a fundamentar argumentos."},
+{type:"riddle",cat:"20 · ENIGMA 5",title:"A voz que reúne",story:"Posso ter episódios, apresentadores, roteiro, pesquisa, entrevista, edição e efeitos sonoros. Posso informar, contar histórias ou promover debates.",q:"Que formato de comunicação está sendo descrito?",answers:["podcast","o podcast"],hint:"É o produto de áudio que a equipe vai planejar ao final.",exp:"O podcast pode integrar pesquisa, roteiro, oralidade, escuta e edição."},
+{type:"order",cat:"21 · QUEBRA-CABEÇA 1",title:"Reconstrua o aviso público",story:"Quatro partes de um aviso foram embaralhadas. Organizem-nas de forma coerente.",q:"Ordenem as partes da sequência inicial até o encaminhamento final.",items:["Informar onde obter mais informações ou como agir.","Identificar o assunto e a razão do aviso.","Apresentar detalhes necessários, como datas, local e serviços.","Indicar quem emite o aviso e a quem se destina."],correct:[3,1,2,0],hint:"Comecem por quem comunica e para quem; depois, assunto, detalhes e encaminhamento.",exp:"A sequência funcional identifica interlocutores, assunto, detalhes e encaminhamento."},
+{type:"order",cat:"22 · QUEBRA-CABEÇA 2",title:"O roteiro assombrado",story:"Uma narrativa de horror foi dividida em quatro fragmentos. Reconstruam a progressão.",q:"Ordenem os fragmentos para construir uma narrativa coerente.",items:["A personagem descobre que o ruído vinha de um gravador desligado.","Um ruído discreto se repete no corredor vazio.","A personagem entra na casa e percebe que algo está errado.","O som passa a responder às perguntas da personagem."],correct:[2,1,3,0],hint:"Comecem pela entrada na casa; depois, o ruído, a intensificação e a revelação.",exp:"A sequência constrói situação inicial, indício, intensificação e revelação."},
+{type:"order",cat:"23 · QUEBRA-CABEÇA 3",title:"A investigação responsável",story:"O podcast recebeu uma denúncia sobre a falta de iluminação de uma rua. Organizem a investigação.",q:"Ordenem as etapas de apuração.",items:["Comparar as informações e identificar o que ainda não foi confirmado.","Consultar fontes pertinentes e verificar registros ou dados.","Apresentar os resultados com contexto e limites da apuração.","Definir com precisão qual afirmação será investigada."],correct:[3,1,0,2],hint:"Definam a pergunta, busquem informações, avaliem evidências e comuniquem os resultados.",exp:"A apuração delimita a questão, reúne fontes, avalia evidências e apresenta conclusões contextualizadas."},
+{type:"order",cat:"24 · QUEBRA-CABEÇA 4",title:"Da leitura ao microfone",story:"O grupo transformará um texto e uma pesquisa em um episódio. A gravação não deve ser o primeiro passo.",q:"Ordenem as ações de produção.",items:["Ensaiar, gravar e avaliar o resultado.","Definir propósito, público e tema.","Revisar o roteiro e verificar as fontes.","Planejar os blocos e escrever o roteiro."],correct:[1,3,2,0],hint:"Definam finalidade e público; escrevam e revisem antes de gravar.",exp:"Planejamento, escrita, revisão, ensaio e gravação são etapas complementares."},
+{type:"order",cat:"25 · QUEBRA-CABEÇA 5",title:"O final que faz pensar",story:"O episódio discutiu um problema público, apresentou evidências e comparou argumentos. Agora, construam uma conclusão.",q:"Ordenem os movimentos da conclusão.",items:["Propor uma reflexão ou ação possível para o público.","Retomar a questão central.","Sintetizar o que as evidências permitem concluir.","Agradecer a escuta e encerrar."],correct:[1,2,0,3],hint:"Retomem a questão, sintetizem a análise, convidem à reflexão e encerrem.",exp:"A conclusão retoma o foco, sintetiza a análise, deixa uma reflexão e finaliza."},
+{type:"pairs",cat:"26 · ASSOCIAÇÃO 1",title:"O arquivo dos gêneros",story:"Os nomes dos gêneros foram separados de suas funções.",q:"Associe cada gênero à definição correspondente.",pairs:[["Notícia","Relata acontecimentos de interesse público com apuração."],["Conto de horror","Constrói narrativa ficcional com medo ou inquietação."],["Ofício","Formaliza uma comunicação institucional."],["Podcast","Publica episódios em áudio e combina recursos sonoros."]],hint:"Observem a finalidade principal de cada gênero.",exp:"Os gêneros possuem finalidades, estruturas e convenções próprias."},
+{type:"pairs",cat:"27 · ASSOCIAÇÃO 2",title:"As ferramentas da linguagem",story:"Quatro conceitos foram retirados de um manual de produção textual.",q:"Associe cada conceito à definição correta.",pairs:[["Coesão","Relações linguísticas que conectam partes do texto."],["Argumento","Razão apresentada para sustentar uma posição."],["Público-alvo","Grupo a quem a comunicação se dirige prioritariamente."],["Sonoplastia","Uso planejado de sons na experiência auditiva."]],hint:"Diferenciem ligação textual, justificativa, destinatário e construção sonora.",exp:"Os conceitos ajudam a planejar textos e episódios adequados ao propósito."},
+{type:"pairs",cat:"28 · ASSOCIAÇÃO 3",title:"Fato, opinião e ficção",story:"A equipe precisa classificar as informações do episódio.",q:"Associe cada conceito à descrição correspondente.",pairs:[["Fato verificável","Afirmação que pode ser confrontada com evidências."],["Opinião","Avaliação ou posição de uma pessoa."],["Ficção","Construção narrativa imaginada."],["Boato","Informação circulante sem confirmação suficiente."]],hint:"Perguntem se a afirmação pode ser verificada, se expressa avaliação ou se foi imaginada.",exp:"Distinguir fato, opinião, ficção e boato fortalece a leitura crítica."},
+{type:"pairs",cat:"29 · ASSOCIAÇÃO 4",title:"Os elementos do horror",story:"O roteiro precisa construir suspense sem depender apenas de sustos repentinos.",q:"Associe cada recurso ao efeito relacionado.",pairs:[["Pausa estratégica","Cria expectativa e destaca um momento."],["Revelação gradual","Libera informações aos poucos."],["Contraste sonoro","Pode intensificar o estranhamento."],["Descrição sensorial","Ajuda a imaginar ambientes e sensações."]],hint:"Pense em como cada recurso interfere na expectativa e no ritmo.",exp:"Os recursos narrativos e sonoros devem ser escolhidos conforme o efeito pretendido."},
+{type:"pairs",cat:"30 · ASSOCIAÇÃO 5",title:"O podcast como prática social",story:"O último arquivo descreve etapas para transformar pesquisa em comunicação pública.",q:"Associe cada etapa de produção ao seu objetivo.",pairs:[["Pesquisa","Reunir e avaliar informações pertinentes."],["Roteiro","Organizar conteúdo, falas e progressão."],["Edição","Montar o áudio sem distorcer o sentido das falas."],["Revisão","Verificar clareza, linguagem, fontes e coerência."]],hint:"Pense no que ocorre antes da escrita, durante a organização e antes da publicação.",exp:"O podcast integra pesquisa, escrita, oralidade, edição e revisão."}
 ];
 
-let current=0,score=0,started=false,finished=false;
-let deadline=0,clock=null,remaining=5400,orderState=[],pairSelections={};
+let current=0,score=0,started=false,finished=false,hintsUsed=0,correctAnswers=0,wrongAttempts=0,completed=0,remaining=TOTAL_SECONDS,deadline=0,clock=null,orderState=[],hintRequested=false,answeredCurrent=false;
 const $=id=>document.getElementById(id);
-const STORAGE_KEY="arquivo30_portugues_v1";
-const SCRIPT_IDS=["podTitle","podTheme","podAudience","podFormat","podHook","podIntro","podContext","podHorror","podPublic","podArgument","podQuestions","podSound","podRoles","podEnding","podDuration","podReview"];
-const SCRIPT_LABELS=["Título do podcast","Tema e questão central","Público-alvo","Formato","Abertura","Apresentação","Contextualização e fontes","Elementos de horror","Relação com a vida pública","Argumentos e contrapontos","Perguntas para debate","Trilha e efeitos","Divisão de funções","Conclusão","Duração planejada","Revisão de linguagem e letramento"];
+const SCRIPT_IDS=["podTitle","podTheme","podAudience","podObjective","podFormat","podHook","podIntro","podContext","podPublic","podSources","podFacts","podArgument","podQuestions","podHorror","podSound","podTransitions","podRoles","podEnding","podDuration","podReview","podCredits"];
+const SCRIPT_LABELS=["Título do podcast","Tema e questão central","Público-alvo","Objetivo comunicativo","Formato do episódio","Gancho inicial","Apresentação dos participantes","Contextualização do tema","Relação com a vida pública","Fontes e evidências","Fatos, opiniões e ficção","Argumentos e contrapontos","Perguntas para debate ou entrevista","Recursos de horror e suspense","Trilha, efeitos e pausas","Transições","Divisão das funções","Conclusão e chamada à reflexão","Duração planejada","Revisão de linguagem e letramento","Créditos e referências"];
 
-function norm(s){
- return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"")
- .toLowerCase().replace(/[^\p{L}\p{N}\s]/gu," ").replace(/\s+/g," ").trim();
-}
-function shuffle(arr){
- let a=arr.slice();
- for(let i=a.length-1;i>0;i--){
-  let j=Math.floor(Math.random()*(i+1));
-  [a[i],a[j]]=[a[j],a[i]];
- }
- return a;
-}
+function normalize(value){return String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^\p{L}\p{N}\s]/gu," ").replace(/\s+/g," ").trim()}
+function escapeHTML(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]))}
+function shuffle(array){const a=array.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function startGame(){
- if(!started){
-  started=true;
-  remaining=5400;
-  deadline=Date.now()+remaining*1000;
-  clock=setInterval(tick,1000);
- }
- $("intro").classList.add("hidden");
- $("game").classList.remove("hidden");
- render();
+ if(started)return;
+ if(challenges.length!==30){alert("Erro: o jogo precisa conter exatamente 30 desafios.");return}
+ started=true;remaining=TOTAL_SECONDS;deadline=Date.now()+remaining*1000;
+ $("intro").classList.add("hidden");$("game").classList.remove("hidden");
+ clock=setInterval(tick,250);tick();render();
 }
 function tick(){
- if(finished)return;
- remaining=Math.max(0,Math.floor((deadline-Date.now())/1000));
- $("timer").textContent=String(Math.floor(remaining/60)).padStart(2,"0")+":"+String(remaining%60).padStart(2,"0");
+ if(!started||finished)return;
+ remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000));
+ const mm=String(Math.floor(remaining/60)).padStart(2,"0"),ss=String(remaining%60).padStart(2,"0");
+ $("timer").textContent=mm+":"+ss;
+ if(remaining<=120)$("timer").classList.add("danger");
  if(remaining===0){
   clearInterval(clock);
-  $("timer").textContent="00:00";
-  $("timer").style.color="var(--red)";
+  $("feedback").innerHTML='<div class="feedback info"><strong>O tempo de 45 minutos terminou.</strong><br>Concluam a etapa em andamento e avancem até o roteiro. O cronômetro não bloqueará a atividade.</div>';
  }
 }
 function render(){
- const c=challenges[current];
- $("stageLabel").textContent=`DESAFIO ${current+1} DE ${challenges.length}`;
- $("scoreLabel").textContent=`${score} pontos`;
- $("progress").style.width=(current/challenges.length*100)+"%";
- $("category").textContent=c.cat;
- $("questionTitle").textContent=c.title;
- $("story").innerHTML=`<div class="panel" style="background:#171929"><p>${escapeHTML(c.story)}</p></div><h3>${escapeHTML(c.q)}</h3>`;
- $("feedback").innerHTML="";
- $("checkBtn").classList.remove("hidden");
- $("checkBtn").disabled=false;
+ const c=challenges[current];hintRequested=false;answeredCurrent=false;
+ $("stageLabel").textContent=`DESAFIO ${current+1} DE 30`;
+ $("category").textContent=c.cat;$("questionTitle").textContent=c.title;$("story").textContent=c.story;
+ $("interaction").innerHTML="";$("feedback").innerHTML="";
+ $("progress").style.width=(completed/30*100)+"%";
+ $("checkBtn").classList.remove("hidden");$("checkBtn").disabled=false;$("checkBtn").textContent="VALIDAR RESPOSTA";
+ $("hintBtn").classList.add("hidden");$("hintBtn").disabled=false;$("hintBtn").textContent="💡 PEDIR DICA (−2 PONTOS)";
  $("nextBtn").classList.add("hidden");
- const area=$("interaction");
- area.innerHTML="";
- orderState=[];
- pairSelections={};
-
  if(c.type==="mc"){
-  c.opts.forEach((o,i)=>{
-   const label=document.createElement("label");
-   label.className="option";
-   label.innerHTML=`<input type="radio" name="answer" value="${i}"><span><strong>${String.fromCharCode(65+i)}.</strong> ${escapeHTML(o)}</span>`;
-   area.appendChild(label);
+  c.opts.forEach((option,index)=>{
+   const label=document.createElement("label");label.className="option";
+   label.innerHTML=`<input type="radio" name="answer" value="${index}"><span><strong>${String.fromCharCode(65+index)}.</strong> ${escapeHTML(option)}</span>`;
+   $("interaction").appendChild(label);
   });
  }else if(c.type==="riddle"){
-  area.innerHTML=`<label class="field" for="riddleAnswer">Resposta da equipe</label><input id="riddleAnswer" type="text" maxlength="150" placeholder="${escapeHTML(c.placeholder)}">`;
+  $("interaction").innerHTML='<label class="field" for="riddleAnswer">Resposta da equipe</label><input id="riddleAnswer" type="text" maxlength="200" placeholder="Digite sua resposta...">';
  }else if(c.type==="order"){
-  orderState=shuffle(c.items.map((text,i)=>({text,original:i})));
-  drawOrder();
+  orderState=shuffle(c.items.map((text,index)=>({text,original:index})));drawOrder();
  }else if(c.type==="pairs"){
-  const options=shuffle(c.pairs.map(p=>p[1]));
-  area.innerHTML=`<div class="pair-grid" id="pairGrid"></div>`;
-  const grid=$("pairGrid");
-  c.pairs.forEach((p,i)=>{
-   const left=document.createElement("div");
-   left.innerHTML=`<strong>${escapeHTML(p[0])}</strong>`;
-   const right=document.createElement("div");
-   const sel=document.createElement("select");
-   sel.id="pair"+i;
-   sel.innerHTML=`<option value="">Escolha a definição...</option>`+
-    options.map(o=>`<option value="${escapeHTML(o)}">${escapeHTML(o)}</option>`).join("");
-   right.appendChild(sel);grid.append(left,right);
+  const definitions=shuffle(c.pairs.map(pair=>pair[1]));
+  const grid=document.createElement("div");grid.className="pair-grid";
+  c.pairs.forEach((pair,index)=>{
+   const term=document.createElement("div");term.className="pair-term";term.textContent=pair[0];
+   const cell=document.createElement("div"),select=document.createElement("select");select.id="pair"+index;
+   select.innerHTML='<option value="">Escolha uma definição...</option>'+definitions.map(def=>`<option value="${escapeHTML(def)}">${escapeHTML(def)}</option>`).join("");
+   cell.appendChild(select);grid.append(term,cell);
   });
+  $("interaction").appendChild(grid);
  }
- saveProgress();
+ updateScore();saveProgress(false);
 }
 function drawOrder(){
- const area=$("interaction");
- area.innerHTML=`<p class="small">Use as setas para mover cada peça.</p><ol class="order-list" id="orderList"></ol>`;
- const list=$("orderList");
- orderState.forEach((item,i)=>{
-  const li=document.createElement("li");
-  li.className="order-item";
-  li.innerHTML=`<span>${i+1}. ${escapeHTML(item.text)}</span>
-  <button class="secondary" aria-label="Mover para cima" ${i===0?"disabled":""} onclick="movePiece(${i},-1)">↑</button>
-  <button class="secondary" aria-label="Mover para baixo" ${i===orderState.length-1?"disabled":""} onclick="movePiece(${i},1)">↓</button>`;
-  list.appendChild(li);
+ $("interaction").innerHTML='<p class="small">Use as setas para mover as peças até formar a sequência correta.</p><ol id="orderList" class="order-list"></ol>';
+ orderState.forEach((item,index)=>{
+  const li=document.createElement("li");li.className="order-item";
+  li.innerHTML=`<span class="piece">${index+1}. ${escapeHTML(item.text)}</span><button class="secondary" aria-label="Mover para cima" ${index===0?"disabled":""} onclick="movePiece(${index},-1)">↑</button><button class="secondary" aria-label="Mover para baixo" ${index===orderState.length-1?"disabled":""} onclick="movePiece(${index},1)">↓</button>`;
+  $("orderList").appendChild(li);
  });
 }
-function movePiece(i,dir){
- const j=i+dir;if(j<0||j>=orderState.length)return;
- [orderState[i],orderState[j]]=[orderState[j],orderState[i]];
- drawOrder();
+function movePiece(index,direction){
+ if(answeredCurrent)return;const target=index+direction;
+ if(target<0||target>=orderState.length)return;
+ [orderState[index],orderState[target]]=[orderState[target],orderState[index]];drawOrder();
 }
 function checkAnswer(){
- const c=challenges[current];
- let ok=false,answered=true;
+ if(answeredCurrent)return;
+ const c=challenges[current];let correct=false,complete=true;
  if(c.type==="mc"){
   const selected=document.querySelector('input[name="answer"]:checked');
-  if(!selected)answered=false;else ok=Number(selected.value)===c.a;
+  if(!selected)complete=false;else correct=Number(selected.value)===c.a;
  }else if(c.type==="riddle"){
-  const v=norm($("riddleAnswer").value);
-  if(!v)answered=false;
-  else ok=c.answers.some(a=>v===norm(a)||v.includes(norm(a))&&norm(a).length>5);
+  const value=normalize($("riddleAnswer").value);
+  if(!value)complete=false;else correct=c.answers.some(answer=>value===normalize(answer));
  }else if(c.type==="order"){
-  ok=orderState.every((x,i)=>x.original===c.correct[i]);
+  correct=orderState.every((item,index)=>item.original===c.correct[index]);
  }else if(c.type==="pairs"){
-  const vals=c.pairs.map((_,i)=>$("pair"+i).value);
-  if(vals.some(v=>!v))answered=false;
-  else ok=vals.every((v,i)=>v===c.pairs[i][1])&&new Set(vals).size===vals.length;
+  const values=c.pairs.map((_,index)=>$("pair"+index).value);
+  if(values.some(value=>!value))complete=false;
+  else correct=values.every((value,index)=>value===c.pairs[index][1])&&new Set(values).size===values.length;
  }
- if(!answered){
-  $("feedback").innerHTML=`<div class="feedback bad">A equipe precisa registrar uma resposta antes de validar.</div>`;
-  return;
- }
- $("checkBtn").disabled=true;
- if(ok){
-  score+=10;
-  $("feedback").innerHTML=`<div class="feedback good"><strong>ACESSO LIBERADO! +10 pontos</strong><br>${escapeHTML(c.exp)}</div>`;
+ if(!complete){$("feedback").innerHTML='<div class="feedback bad">Preencham todas as respostas antes de validar.</div>';return}
+ if(correct){
+  score+=10;correctAnswers++;completed++;answeredCurrent=true;
+  $("feedback").innerHTML=`<div class="feedback good"><strong>RESPOSTA CORRETA! +10 PONTOS</strong><br>${escapeHTML(c.exp)}</div>`;
+  $("checkBtn").classList.add("hidden");$("hintBtn").classList.add("hidden");$("nextBtn").classList.remove("hidden");lockInteraction();
  }else{
-  $("feedback").innerHTML=`<div class="feedback bad"><strong>Ainda não. Analise as pistas novamente.</strong><br>Revise o conceito e tente uma nova estratégia. A equipe poderá prosseguir depois desta tentativa.</div>`;
- }
- // Permitir correção sem perder a fase.
- if(!ok){
-  $("checkBtn").disabled=false;
+  wrongAttempts++;
+  $("feedback").innerHTML='<div class="feedback bad"><strong>AINDA NÃO!</strong><br>A resposta não corresponde à solução esperada. Releiam as pistas e discutam outra hipótese. Vocês podem tentar novamente ou pedir uma dica por 2 pontos.</div>';
+  if(!hintRequested)$("hintBtn").classList.remove("hidden");
   $("checkBtn").textContent="TENTAR NOVAMENTE";
-  return;
  }
- $("scoreLabel").textContent=`${score} pontos`;
- $("progress").style.width=((current+1)/challenges.length*100)+"%";
- $("checkBtn").classList.add("hidden");
- $("nextBtn").classList.remove("hidden");
- saveProgress();
+ updateScore();saveProgress(false);
+}
+function lockInteraction(){$("interaction").querySelectorAll("input,select,button").forEach(element=>element.disabled=true)}
+function requestHint(){
+ if(hintRequested||answeredCurrent)return;
+ if(!window.confirm("Aceitar a dica custa 2 pontos. Desejam continuar?"))return;
+ score=Math.max(0,score-2);hintsUsed++;hintRequested=true;
+ $("hintBtn").disabled=true;$("hintBtn").textContent="DICA UTILIZADA";
+ $("feedback").innerHTML+=`<div class="feedback hint"><strong>💡 DICA DA INVESTIGAÇÃO (−2 PONTOS)</strong><br>${escapeHTML(challenges[current].hint)}</div>`;
+ updateScore();saveProgress(false);
 }
 function nextChallenge(){
+ if(!answeredCurrent)return;
  current++;
- if(current>=challenges.length){
-  finishGame();return;
- }
- render();
- window.scrollTo({top:0,behavior:"smooth"});
+ if(current>=challenges.length){finishGame();return}
+ render();window.scrollTo({top:0,behavior:"smooth"});
+}
+function updateScore(){
+ $("scoreLabel").textContent=score+" pontos";$("statCorrect").textContent=correctAnswers;
+ $("statWrong").textContent=wrongAttempts;$("statHints").textContent=hintsUsed;
+ $("statDone").textContent=completed+"/30";$("progress").style.width=(completed/30*100)+"%";
 }
 function finishGame(){
- finished=true;clearInterval(clock);
- $("game").classList.add("hidden");
- $("finish").classList.remove("hidden");
- $("finalScore").textContent=`Pontuação: ${score} / ${challenges.length*10}`;
- const elapsed=5400-remaining;
- $("finalTime").textContent=`Tempo utilizado: ${Math.floor(elapsed/60)} min`;
- $("progress").style.width="100%";
- loadScript();
- window.scrollTo({top:0,behavior:"smooth"});
+ finished=true;clearInterval(clock);$("game").classList.add("hidden");$("finish").classList.remove("hidden");
+ $("finalScore").textContent="Pontuação final: "+score+" pontos";
+ $("finalStats").textContent=`Acertos: ${correctAnswers}/30 · Erros: ${wrongAttempts} · Dicas utilizadas: ${hintsUsed}`;
+ const elapsed=TOTAL_SECONDS-remaining;
+ $("finalTime").textContent=`Tempo utilizado: ${Math.floor(elapsed/60)} min e ${elapsed%60} s`;
+ loadScriptFields();saveProgress(false);window.scrollTo({top:0,behavior:"smooth"});
 }
-function escapeHTML(s){
- return String(s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+function showInstructions(){
+ alert("REGRAS DA MISSÃO\n\n• 30 desafios.\n• Cada acerto vale 10 pontos.\n• Cada dica aceita custa 2 pontos.\n• A pontuação nunca fica negativa.\n• Respostas erradas são registradas, mas não retiram pontos.\n• O tempo disponível é de 45 minutos.\n• Ao concluir os desafios, montem o roteiro do podcast.");
 }
 function scriptData(){
- const data={};
- SCRIPT_IDS.forEach(id=>data[id]=$(id).value);
- data.team=$("team").value;
- data.members=$("members").value;
+ const data={};SCRIPT_IDS.forEach(id=>data[id]=$(id).value);
+ data.team=$("team").value;data.members=$("members").value;
+ data.checklist=[...document.querySelectorAll(".checklist input[type=checkbox]")].map(input=>input.checked);
  return data;
 }
-function saveScript(){
+function saveProgress(showMessage=false){
  try{
-  localStorage.setItem(STORAGE_KEY,JSON.stringify({
-   current,score,remaining,team:$("team").value,members:$("members").value,
-   script:scriptData()
-  }));
-  $("saveMessage").innerHTML='<div class="feedback good">Roteiro salvo neste navegador.</div>';
- }catch(e){
-  $("saveMessage").innerHTML='<div class="feedback bad">Não foi possível salvar automaticamente. Use “Baixar roteiro”.</div>';
+  const record={version:4,current,score,started,finished,hintsUsed,correctAnswers,wrongAttempts,completed,remaining,team:$("team").value,members:$("members").value,script:scriptData()};
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(record));
+  if(showMessage)$("saveMessage").innerHTML='<div class="feedback good">Dados salvos neste navegador.</div>';
+  return true;
+ }catch(error){
+  if(showMessage)$("saveMessage").innerHTML='<div class="feedback bad">Não foi possível salvar. Baixem uma cópia do roteiro.</div>';
+  return false;
  }
 }
-function loadScript(){
+function saveScript(){saveProgress(true)}
+function loadScriptFields(){
  try{
-  const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");
-  if(saved&&saved.script){
-   SCRIPT_IDS.forEach(id=>{if(saved.script[id]!==undefined)$(id).value=saved.script[id]});
-  }
- }catch(e){}
+  const record=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");if(!record||!record.script)return;
+  SCRIPT_IDS.forEach(id=>{if(record.script[id]!==undefined)$(id).value=record.script[id]});
+  if(Array.isArray(record.script.checklist))document.querySelectorAll(".checklist input[type=checkbox]").forEach((input,index)=>input.checked=!!record.script.checklist[index]);
+ }catch(error){}
 }
 function downloadScript(){
- const d=scriptData();
- const lines=[
-  "ARQUIVO 30 — ROTEIRO DO PODCAST",
-  "Equipe: "+(d.team||"Não informado"),
-  "Integrantes: "+(d.members||"Não informado"),
-  "Pontuação nos desafios: "+score+"/"+(challenges.length*10),
-  ""
- ];
- SCRIPT_LABELS.forEach((label,i)=>{
-  lines.push(label.toUpperCase());
-  lines.push(d[SCRIPT_IDS[i]]||"[Preencher]");
-  lines.push("");
- });
+ const data=scriptData(),lines=["ARQUIVO 30 — ROTEIRO DO PODCAST","Equipe: "+(data.team||"Não informado"),"Integrantes: "+(data.members||"Não informado"),"Pontuação final: "+score+" pontos","Acertos: "+correctAnswers+"/30","Erros registrados: "+wrongAttempts,"Dicas utilizadas: "+hintsUsed,""];
+ SCRIPT_LABELS.forEach((label,index)=>{lines.push(label.toUpperCase());lines.push(data[SCRIPT_IDS[index]]||"[Preencher]");lines.push("")});
  lines.push("CHECKLIST PRÉ-GRAVAÇÃO");
- document.querySelectorAll("#checklist input").forEach(el=>{
-  lines.push((el.checked?"[X] ":"[ ] ")+el.parentElement.textContent.trim());
- });
+ document.querySelectorAll(".checklist input[type=checkbox]").forEach(input=>lines.push((input.checked?"[X] ":"[ ] ")+input.parentElement.textContent.trim()));
  lines.push("","Professora Bárbara — Língua Portuguesa");
- const blob=new Blob(["\ufeff"+lines.join("\r\n")],{type:"text/plain;charset=utf-8"});
- const url=URL.createObjectURL(blob);
- const a=document.createElement("a");
- a.href=url;a.download="roteiro-podcast-arquivo30.txt";
- document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
- saveScript();
+ const blob=new Blob(["\ufeff"+lines.join("\r\n")],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob);
+ const link=document.createElement("a");link.href=url;link.download="roteiro-podcast-arquivo30.txt";document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url);saveProgress(false);
 }
-function saveProgress(){
- try{
-  localStorage.setItem(STORAGE_KEY,JSON.stringify({
-   current,score,remaining,team:$("team").value,members:$("members").value,
-   script:scriptData()
-  }));
- }catch(e){}
+function clearSaved(){
+ if(!window.confirm("Apagar o progresso e o roteiro salvos neste navegador? Esta ação não pode ser desfeita."))return;
+ localStorage.removeItem(STORAGE_KEY);window.location.reload();
 }
-$("team").addEventListener("input",saveProgress);
-$("members").addEventListener("input",saveProgress);
-SCRIPT_IDS.forEach(id=>{
- $(id).addEventListener("input",saveProgress);
- $(id).addEventListener("change",saveProgress);
-});
-(function restore(){
+function restoreForm(){
  try{
-  const s=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");
-  if(s){
-   $("team").value=s.team||"";
-   $("members").value=s.members||"";
-   if(s.script)SCRIPT_IDS.forEach(id=>{if(s.script[id]!==undefined)$(id).value=s.script[id]});
+  const record=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");if(!record)return;
+  $("team").value=record.team||"";$("members").value=record.members||"";
+  if(record.script){
+   SCRIPT_IDS.forEach(id=>{if(record.script[id]!==undefined)$(id).value=record.script[id]});
+   if(Array.isArray(record.script.checklist))document.querySelectorAll(".checklist input[type=checkbox]").forEach((input,index)=>input.checked=!!record.script.checklist[index]);
   }
- }catch(e){}
-})();
+ }catch(error){}
+}
+$("team").addEventListener("input",()=>saveProgress(false));
+$("members").addEventListener("input",()=>saveProgress(false));
+SCRIPT_IDS.forEach(id=>{$(id).addEventListener("input",()=>saveProgress(false));$(id).addEventListener("change",()=>saveProgress(false))});
+document.querySelectorAll(".checklist input[type=checkbox]").forEach(input=>input.addEventListener("change",()=>saveProgress(false)));
+restoreForm();
+if(challenges.length!==30)console.error("O jogo precisa ter exatamente 30 desafios.");
 </script>
 </body>
 </html>
+
